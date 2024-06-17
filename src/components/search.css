@@ -13,6 +13,21 @@ font-size: 15px;
     font-weight: bold;
    color: white;
 }
+.fav-list{
+    background-color: rgba(0, 0, 0, 0.392);
+    margin-bottom:2%;
+    font-size: small;
+    
+}
+.favforecast-list{
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin:2% 2% 2% 0%;
+    flex-direction: row;
+    border-radius:5%;
+    width:20%;
+    background-color: rgba(11, 225, 150, 0.739);
+}
 .list{
     display:flex;
     flex-direction: column;
