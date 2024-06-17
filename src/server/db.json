@@ -1,7 +1,22 @@
 {
-    "city":[{
-        "cityName":"",
-        "longitude":"",
-        "latitude":""
-    }]
+  "city": [
+    {
+      "id": "ee0b",
+      "cityName": "Mumbai",
+      "longitude": 72.878176,
+      "latitude": 19.0785451
+    },
+    {
+      "id": "b7c9",
+      "cityName": "Delhi",
+      "longitude": 77.2219388,
+      "latitude": 28.6517178
+    },
+    {
+      "id": "23cd",
+      "cityName": "",
+      "longitude": "",
+      "latitude": ""
+    }
+  ]
 }

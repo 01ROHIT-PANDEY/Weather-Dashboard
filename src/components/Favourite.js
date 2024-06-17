@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Favourite(props) {
-    const display=()=>{
-
-    }
+    const[favdata,setfavData]=useState([]);
+   
+    
 return(
     <div>
-    {/* <button onClick={display}>See Favourite Cities</button> */}
+      <h3>{props.keys}</h3>
     </div>
 );
-}
 
+}
 export default Favourite
