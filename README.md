@@ -11,7 +11,7 @@ Used JSON Server for creating the Mock API Request to Store Some Searched City I
 ### Things to take care of before Running an Application
 Make sure that you have latest Node.js version install in your System
 Along with you should have a VS Code to be installed in Your System
-Install JSON Server using NPM Command which is **npm install -g json-server**
+Install JSON Server using NPM Command which is {**npm install -g json-server**}
 
 ### Getting an API KEY for Weather Data 
 Go to the Open Weather Api Website.
