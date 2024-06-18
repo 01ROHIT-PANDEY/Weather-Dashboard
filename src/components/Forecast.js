@@ -8,7 +8,7 @@ function Forecast(props) {
     const month=date.getMonth()+1;
     const year=date.getFullYear();
   const newdate=day+'/'+month+'/'+year;
- 
+   
        
   return (
     <div className='card'>
