@@ -7,16 +7,22 @@
       "latitude": 19.0785451
     },
     {
-      "id": "b7c9",
+      "id": "688b",
       "cityName": "Delhi",
       "longitude": 77.2219388,
       "latitude": 28.6517178
     },
     {
-      "id": "23cd",
-      "cityName": "",
-      "longitude": "",
-      "latitude": ""
+      "id": "2403",
+      "cityName": "Delhi",
+      "latitude": 28.6517178,
+      "longitude": 77.2219388
+    },
+    {
+      "id": "53a5",
+      "cityName": "Gurgaon",
+      "latitude": 28.42826235,
+      "longitude": 77.00270014657752
     }
   ]
 }
