@@ -1,28 +1,28 @@
 {
   "city": [
     {
-      "id": "ee0b",
-      "cityName": "Mumbai",
-      "longitude": 72.878176,
-      "latitude": 19.0785451
-    },
-    {
-      "id": "688b",
-      "cityName": "Delhi",
-      "longitude": 77.2219388,
-      "latitude": 28.6517178
-    },
-    {
-      "id": "2403",
-      "cityName": "Delhi",
-      "latitude": 28.6517178,
-      "longitude": 77.2219388
-    },
-    {
       "id": "53a5",
       "cityName": "Gurgaon",
       "latitude": 28.42826235,
       "longitude": 77.00270014657752
+    },
+    {
+      "id": "d479",
+      "cityName": "Mumbai",
+      "latitude": 19.0785451,
+      "longitude": 72.878176
+    },
+    {
+      "id": "552c",
+      "cityName": "Kolkata",
+      "latitude": 22.5414185,
+      "longitude": 88.35769124388872
+    },
+    {
+      "id": "7d88",
+      "cityName": "Chennai",
+      "latitude": 13.0836939,
+      "longitude": 80.270186
     }
   ]
 }
