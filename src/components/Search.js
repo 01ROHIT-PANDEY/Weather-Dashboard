@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './search.css'
 import Forecast from './Forecast';
 import Favourite from './Favourite';
+import icon from '../weather-icon.gif';
 function Search() {
  const [inputlocation,setinputLocation]=useState();
 const [cityList,setcityList]=useState([]);
@@ -17,6 +18,7 @@ const[loaded,setdataLoaded]=useState(false);
 const apiKey=process.env.WEATHER_API_KEY
 const[favouriteloc,setFavouriteLoc]=useState([]);
 var arr=[];
+var dataRecent=[];
 useEffect(()=>{
     const getData=async()=>{
         await fetch('http://localhost:8000/city')
@@ -27,6 +29,11 @@ useEffect(()=>{
     getfavlocationlist();
     
 },[favlist])
+useEffect(()=>{
+    dataRecent=localStorage.getItem("city");
+    console.log(dataRecent)
+},[])
+
 const storeRecent=(value)=>{
      const items=localStorage.getItem("city");
      var dataValue=[];
@@ -94,6 +101,29 @@ const getfavlocationlist=async()=>{
      await getlocdata();
     }
 
+const FavCityRemove=(item)=>{
+
+
+        const RemoveFavCity=async(item)=>{
+           
+            await fetch('http://localhost:8000/city/'+item,{
+                method: 'DELETE',
+                headers:{
+                    'Content-Type':'application/json'
+                }
+              })
+              .then(response => response.json())
+              .then(user => console.log({cityName:item}));
+            
+           
+            window.alert("Removed Successfully");   
+            window.location.reload();
+            
+        }
+        RemoveFavCity(item);
+        setFavlist(false);
+
+    }
 /**Set Current City To Favourite */
 const handleFavourite=()=>{
    
@@ -186,7 +216,7 @@ const SetCoordinate=(e)=>{
     // setinputLocation(cityList[0].name);
     setLong(cityList[e].lon);
     setLat(cityList[e].lat);
-    
+    setCityErr(false);
 
     const getweatherData=async(e)=>{
         
@@ -241,28 +271,40 @@ if(temp.length==(favouriteloc.length*40))
         // console.log(arr);
         return true;
     }
+    else{
+        return false;
+    }
 }
 
 
   return (
     
     <div  className='search' >
-     <h3 id="heading">Weather Dashboard</h3>
+        <div id="heading">
+        <img src={icon} width='50px' height='45px' style={{borderRadius:'50%',marginLeft:'2%',marginRight:'2%'}}></img>
+        <h3 onClick={()=>{window.location.reload()}}> Weather Dashboard</h3>
+        </div>
+     
 
      <div className='input-search'>
         <input type='text' placeholder='Enter Location Name'  name="text-name" onChange={(e)=>{setinputLocation(e.target.value);}}></input>
         <button onClick={()=>{getCityData();
         }}>Find</button><br></br>
         {
-            (inputlocation)?
-            
-                <div className='grp-list'>
-                    <h4>Recent Search</h4>
-                    
-                    <div className='list'>
-                    <span>{localStorage.getItem("city")}</span>
-                    </div>
+            (inputlocation && dataRecent.size>0)?
+              
+                <div className='recent-list'>
                    
+                    <h4>Recent Search</h4>
+                   { 
+                   
+                   dataRecent.forEach((item)=>{
+                        <div className='list1'>
+                    <span>{item}</span>
+                    </div>
+                    })
+                    
+                }
                 </div>
                 
                
@@ -294,23 +336,19 @@ if(temp.length==(favouriteloc.length*40))
 
          {/* *My City Open */}
 
-         <div style={{marginTop:"5%",fontSize:"8px"}}>
-        <button type="radio" style={{border:"white",color:"white",padding:"1%",
-        fontWeight:"bold"}} onClick={()=>{setFavlist(!favlist);
-        if(favlist===true){}}}>
+        <button type="radio" style={{marginTop:"5%",fontSize:"10px",border:"white",color:"white",padding:"1%"}} onClick={()=>{setFavlist(!favlist);}}>
         {(favlist)?<h4>Close Saved City</h4>:<h4>Open Saved City</h4>}</button><br></br>
     
-        {(favlist==true  && weatherData.length>0)?<a href="#favlist"><button style={{padding:"2%",margin:"2%",color:"black",backgroundColor:"skyblue",}} >Go to Saved Weather</button></a>:<></>}
-        {(weatherData.length>0)?<a href="#weathlist"> <button style={{padding:"2%",color:"black",margin:"2%",backgroundColor:"skyblue",}}>Go to Current Weather</button></a>:<></>}
+        {(favlist==true  && weatherData.length>0)?<a href="#favlist"><button style={{padding:"2%",margin:"2%",color:"white",fontSize:"10px",backgroundColor:"rgb(5, 81, 128)"}} >Go to Saved Weather</button></a>:<></>}
+        {(weatherData.length>0)?<a href="#weathlist"> <button style={{padding:"2%",color:"white",margin:"2%",backgroundColor:" rgb(5, 81, 128)",fontSize:"10px"}}>Go to Current Weather</button></a>:<></>}
     
-        </div>
 
         </div>
 {/* Displaying the Data */}
      <div className='details'>
          {
             (favlist==false && weatherData.length<=0)?<div className='bg-msg'>Hey! What are  you waiting For?<br></br>Check Your City Weather<br></br><br></br>
-            <h1>NOW...</h1></div>:<></>
+            <h1>Right NOW...</h1></div>:<></>
          }
 
 
@@ -320,21 +358,30 @@ if(temp.length==(favouriteloc.length*40))
             {
                 
                 (favlist===true && extractdata()==true)?
-                
-                <div id='favlist' style={{backgroundColor:"grey",margin:"2%",marginBottom:"15%"}}>
-                    <div style={{backgroundColor:"black",color:"white",padding:"2%",margin:"2%"}}>
-                <input type="radio" id="celsius" name="celsius" value="celsius" checked={metric==="celsius"}onChange={()=>setMetric("celsius")}/><label htmlFor="celsius">Celsius</label>   
+               
+                <div id='favlist' style={{backgroundColor:"#c7edff",margin:"2%",marginBottom:"15%"}}>
+                    <div style={{backgroundColor:"black",color:"white",padding:"1%",margin:"1%"}}>
+                <input type="radio" id="celsius" name="celsius" value="celsius" checked={metric==="celsius"} onChange={()=>setMetric("celsius")}/><label htmlFor="celsius">Celsius</label>   
                 <input type="radio" id="fahren" name="fahren" value="fahren"  checked={metric==="fahren"} onChange={()=>setMetric("fahren")}/><label htmlFor="fahren">Fahrenheit</label>
-                <h1 style={{fontStyle:"italic"}}>Favourite Cities</h1>
-                <div style={{backgroundColor:"grey",display:"flex",flexWrap:'wrap',padding:"2%",textAlign:"center"}}>
-                {
-                    favouriteloc.map((item)=>{
-                        return <h4 style={{margin:"2%"}}>{item.cityName}</h4>
-                    })
-                }
-                </div>
+                <h2 style={{fontStyle:"italic"}}>Favourite Cities</h2>
+                        <div style={{backgroundColor:" #c7edff",display:"flex",color:'black',flexWrap:'wrap',textAlign:"center"}}>
+                        {
+                            favouriteloc.map((item)=>{
+                                return <>
+                                <div style={{margin:'2%'}}>
+                                <h2 style={{margin:"2%"}}>{item.cityName}</h2>
+                                <button alt="Remove City"style={{backgroundColor:'black',padding:'0',border:'none',color:'white',padding:'10%',borderRadius:'10%',fontWeight:'bold',fontSize:'10px'}}onClick={()=>FavCityRemove(item.id)}>Remove</button>
+                                </div>
+                                </>
+                            })
+                        }
+                        
+                        </div>
+              
                     </div>
-                    { 
+                    {
+                    (arr.length>0)?
+                    
                 
                         arr.map((element,index)=>{
                             // console.log(ind.city);
@@ -349,7 +396,9 @@ if(temp.length==(favouriteloc.length*40))
                         
                     
                 
-                    }
+                    
+                    :<div  style={{color:'red',padding:'2%',fontWeight:'bold',fontFamily:'cursive',fontStyle:'italic'}}>No Favourite City is Added</div>
+                }
                     </div>
             
             :<></>
@@ -369,14 +418,18 @@ if(temp.length==(favouriteloc.length*40))
          (weatherData.length>0)?
          
           <div id='weathlist' style={{backgroundColor:"#c7edff",margin:"2%"}}>
-            <div style={{backgroundColor:"black",color:"white",padding:"2%",margin:"2%"}}>
-                <h3>Searched City</h3>
-                    <h2>{currentCity}</h2>
+            <div style={{backgroundColor:"black",color:"white",padding:"1%",marginTop:"5%"}}>
+                
+                
+                    <h3>Current City</h3>
+                    <h2 style={{textAlign:'center'}}>{currentCity}</h2>
+                      <div style={{textAlign:'center'}} >
                         <input type="radio" id="celsius" name="celsius" value="celsius" checked={metric==="celsius"}onChange={()=>setMetric("celsius")}/><label htmlFor="celsius">Celsius</label>   
                         <input type="radio" id="fahren" name="fahren" value="fahren"  checked={metric==="fahren"} onChange={()=>setMetric("fahren")}/><label htmlFor="fahren">Fahrenheit</label>
-        
+                    </div>
+                    <button style={{border:'1px solid rgba(9, 148, 240, 0.87)',marginRight:'0',marginLeft:'80%',backgroundColor:'rgba(9, 148, 240, 0.87)',color:'white'}}onClick={handleFavourite}><h5>Add To Favourite</h5></button>
             </div>
-            <button style={{border:'1px solid #09eb94',backgroundColor:'#09eb94',color:'black'}}onClick={handleFavourite}><h5>Add To Favourite</h5></button><br></br>
+            
       
         {weatherData.map((item)=>{
            console.log(weatherData);
