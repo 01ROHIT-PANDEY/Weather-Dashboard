@@ -1,12 +1,12 @@
 .card{
-    background-color: rgba(47, 52, 51, 0.49);
-    font-size: medium;
+    background-color:rgba(9, 148, 240, 0.87);
     font-family:'Times New Roman';
     color:rgb(255, 255, 255);
     width:100%;
-    margin:8%;
+   
     padding:2%;
     border-radius:2%;
+    
   
 }
 @media only screen and (max-width:768px)  {
