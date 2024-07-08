@@ -168,7 +168,7 @@ const getCityData=()=>{
    const location=inputlocation;
 
    const getCityFetch=async(e)=>{
-      await fetch("http://api.openweathermap.org/geo/1.0/direct?"+new URLSearchParams({
+      await fetch("https://api.openweathermap.org/geo/1.0/direct?"+new URLSearchParams({
         q:e,
         limit:5,
         appid:'8d629db10495c47d8908c307532c333e',
